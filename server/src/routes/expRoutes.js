@@ -48,21 +48,7 @@ expRouter.post(
    })
 );
 
-// DELETE /api/exp/:id - delete expense by ID
-expRouter.delete(
-   '/api/exp/:id',
-   asyncHandler(async (req, res) => {
-      const expID = req.params.id;
-      const sql = 'DELETE FROM expenses WHERE id=?';
-      const [rows] = await pool.execute(sql, [expID]);
-      if (rows.affectedRows === 0) {
-         throw new Error(`Post by ID === ${expID} not found, check ID.`);
-      }
-      res.json({ msg: `Expense by ID === ${expID} has been deleted` });
-   })
-);
-
-// Update by ID
+// UPDATE by ID
 // PUT /api/exp/:id - edit expense by ID
 expRouter.put(
    '/api/exp/:id',
@@ -70,9 +56,9 @@ expRouter.put(
       const { cat_id, comment, date, amount } = req.body;
       const { id } = req.params;
       const sql = `
-     UPDATE expenses 
-     SET cat_id = ?, comment = ?, date = ?, amount = ?
-     WHERE id = ?`;
+    UPDATE expenses 
+    SET cat_id = ?, comment = ?, date = ?, amount = ?
+    WHERE id = ?`;
       const [rows] = await pool.execute(sql, [
          cat_id,
          comment,
@@ -84,6 +70,20 @@ expRouter.put(
          throw new Error(`ERROR updating expense with id ${id}`);
       }
       res.json({ msg: `Expense with id ${id} has been updated` });
+   })
+);
+
+// DELETE /api/exp/:id - delete expense by ID
+expRouter.delete(
+   '/api/exp/:id',
+   asyncHandler(async (req, res) => {
+      const expID = req.params.id;
+      const sql = 'DELETE FROM expenses WHERE id=?';
+      const [rows] = await pool.execute(sql, [expID]);
+      if (rows.affectedRows === 0) {
+         throw new Error(`Post by ID === ${expID} not found, check ID.`);
+      }
+      res.json({ msg: `Expense by ID === ${expID} has been deleted` });
    })
 );
 

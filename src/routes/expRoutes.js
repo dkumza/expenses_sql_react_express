@@ -21,7 +21,7 @@ expRouter.get(
 
 // GET /api/exp/:id - get expense by ID
 // SELECT * FROM `expenses`
-// WHERE id=postID;
+// WHERE id=id;
 expRouter.get(
    '/api/exp/:id',
    asyncHandler(async (req, res) => {
@@ -41,7 +41,6 @@ expRouter.post(
    '/api/exp',
    asyncHandler(async (req, res) => {
       const { cat_id, comment, date, amount } = req.body;
-      console.log(date);
       const sql = `
       INSERT INTO expenses (cat_id, comment, date, amount) 
       VALUES (?,?,?,?)`;
@@ -50,6 +49,22 @@ expRouter.post(
          throw new Error(`ERROR creating new expense`);
       }
       res.json({ msg: `New Expense has been created` });
+   })
+);
+
+// DELETE /api/exp/:id - delete expense by ID
+// DELETE FROM `expenses`
+// WHERE id=id;
+expRouter.delete(
+   '/api/exp/:id',
+   asyncHandler(async (req, res) => {
+      const expID = req.params.id;
+      const sql = 'DELETE FROM expenses WHERE id=?';
+      const [rows] = await pool.execute(sql, [expID]);
+      if (rows.affectedRows === 0) {
+         throw new Error(`Post by ID === ${expID} not found, check ID.`);
+      }
+      res.json({ msg: `Expense by ID === ${expID} has been deleted` });
    })
 );
 

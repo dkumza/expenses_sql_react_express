@@ -15,12 +15,14 @@ The project is divided into two main folders:
 
 ## Server
 
-The server is built with Express.js and provides the following endpoints:
+The server is built with Express.js, SQL and provides the following endpoints:
 
 -  `GET /api/exp_all`: Fetches all expenses from the database.
 -  `DELETE /api/exp/:id`: Deletes a expense with the specified ID from the database.
 -  `POST /api/exp`: Adds a new expense to the database.
 -  `PUT /api/exp/:id`: Updates the expense with the specified ID in the database.
+
+You can import "exp_DB.sql" file from "./server/src/db" to your database and test it locally.
 
 ## Client
 

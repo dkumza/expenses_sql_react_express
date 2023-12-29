@@ -15,6 +15,7 @@ export const ExpProvider = ({ children }) => {
    const [amount, setAmount] = useState(0);
    const [title, setTitle] = useState('');
    const [date, setDate] = useState(todayDate);
+   const [id, setId] = useState('');
    const [toEdit, setToEdit] = useState(null);
    const [editing, setEditing] = useState(false);
    const [balance, setBalance] = useState(0);
@@ -22,11 +23,17 @@ export const ExpProvider = ({ children }) => {
    const [negatives, setNegatives] = useState(0);
 
    useEffect(() => {
+      // fetch expenses from DB
       axios
          .get(`${BASE_URL}/exp_all`)
          .then((res) => {
             if (res.data.length === 0) return;
-            setExpenses(res.data);
+            let formattedExpenses = res.data.map((expense) => {
+               let date = new Date(expense.date);
+               let formattedDate = date.toISOString().split('T')[0];
+               return { ...expense, date: formattedDate };
+            });
+            setExpenses(formattedExpenses);
          })
          .catch((err) => {
             console.warn('ERROR: ', err);
@@ -34,6 +41,7 @@ export const ExpProvider = ({ children }) => {
    }, []);
 
    useEffect(() => {
+      // calculates Balance
       if (expenses) {
          let totals = expenses.reduce(
             (acc, exp) => {
@@ -64,8 +72,9 @@ export const ExpProvider = ({ children }) => {
          title,
          date,
       };
+      console.log(newExp);
       axios
-         .post(BASE_URL, newExp)
+         .post(`${BASE_URL}/exp`, newExp)
          .then((res) => {
             if (res.status === 201) {
                setExpenses(res.data);
@@ -82,10 +91,11 @@ export const ExpProvider = ({ children }) => {
 
    const handleFormFill = (id) => {
       const found = expenses.find((exp) => exp.id === id); // if user exists fill input fields
-      setCat(found.cat);
+      setCat(found.cat_id);
       setAmount(found.amount);
-      setTitle(found.title);
+      setTitle(found.comment);
       setDate(found.date);
+      setId(found.id);
    };
 
    const handleEdit = (id) => {
@@ -94,18 +104,24 @@ export const ExpProvider = ({ children }) => {
       setEditing(true);
    };
 
-   const handleSubmitEdit = () => {
+   const handleSubmitEdit = (e) => {
+      e.preventDefault();
       const editExp = {
-         cat,
-         amount,
-         title,
+         cat_id: cat,
+         comment: title,
          date,
+         amount: parseInt(amount),
       };
       axios
-         .put(`${BASE_URL}/${toEdit}`, editExp)
+         .put(`${BASE_URL}/exp/${id}`, editExp)
          .then((res) => {
+            console.log(res.data);
             if (res.status === 200) {
-               setExpenses(res.data);
+               // updates existing expense by ID with created editExp Object
+               let updatedExpenses = expenses.map((exp) =>
+                  exp.id === id ? { id, ...editExp } : exp
+               );
+               setExpenses(updatedExpenses);
                setCat('');
                setAmount('');
                setTitle('');

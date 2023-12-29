@@ -1,50 +1,35 @@
 import { useContext } from 'react';
 import { ExpContext } from './ExpContext';
 
-const getIconClass = (category) => {
+const getCategoryInfo = (category) => {
    switch (category) {
       case '1':
-         return 'bi-lightning-charge';
+         return ['bi-lightning-charge', 'Food'];
       case '2':
-         return 'bi-balloon-heart';
+         return ['bi-balloon-heart', 'Health'];
       case '3':
-         return 'bi-house-heart';
+         return ['bi-house-heart', 'House'];
       default:
-         return 'bi-cash-stack';
-   }
-};
-
-const getCatNames = (category) => {
-   switch (category) {
-      case '1':
-         return 'Food';
-      case '2':
-         return 'Health';
-      case '3':
-         return 'House';
-      default:
-         return 'Salary';
+         return ['bi-cash-stack', 'Salary'];
    }
 };
 
 export const Expense = ({ exp }) => {
    const { handleEdit } = useContext(ExpContext);
-   console.log(exp);
 
-   const iconClass = getIconClass(exp.cat_id);
-   const catName = getCatNames(exp.cat_id);
+   // console.log(exp);
+
+   const iconClass = getCategoryInfo(exp.cat_id);
 
    return (
       <div className="w-full" onClick={() => handleEdit(exp.id)}>
          <li className="flex w-full items-center border border-gray-100 rounded shadow px-1 py-1 hover:bg-gradient-to-r from-white to-gray-50 shadow-gray-300/50 hover:cursor-pointer">
             <div className="flex justify-center items-center px-3 mr-4 border-r">
-               <i className={`bi ${iconClass}`}></i>
+               <i className={`bi ${iconClass[0]}`}></i>
             </div>
             <div className="category-item md:pr-8 pr-4">
-               <h3 className="text-base">{catName}</h3>
-               <p className="text-xs font-normal text-gray-400">
-                  {exp.date.slice(0, 10)}
-               </p>
+               <h3 className="text-base">{iconClass[1]}</h3>
+               <p className="text-xs font-normal text-gray-400">{exp.date}</p>
             </div>
             <div className="text-sm text-gray-400">{exp.comment}</div>
             <div className="ml-auto  pr-4">
@@ -55,11 +40,7 @@ export const Expense = ({ exp }) => {
                         : 'text-rose-400'
                   }
                >
-                  {exp.amount}{' '}
-                  {/* {exp.amount > -1 && exp.cat !== "Salary"
-                     ? parseInt(-exp.amount)
-                     : parseInt(exp.amount)}{" "} */}
-                  EUR
+                  {exp.amount} EUR
                </h3>
             </div>
          </li>

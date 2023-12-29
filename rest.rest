@@ -18,6 +18,17 @@ Content-Type:  application/json
     "amount": -30
 }
 
+### Edit expense by ID
+PUT http://localhost:3000/api/exp/6
+Content-Type:  application/json
+
+{
+    "cat_id": "1",
+    "comment": "Kruopos",
+    "date": "2023-12-29",
+    "amount": -3
+}
+
 ### Delete post
 DELETE  http://localhost:3000/api/exp/10
 

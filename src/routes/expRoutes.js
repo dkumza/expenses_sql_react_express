@@ -10,7 +10,6 @@ const pool = mysql.createPool(dbConfig);
 const expRouter = express.Router();
 
 // GET /api/exps - get all expenses
-// SELECT * FROM expenses
 expRouter.get(
    '/api/exp_all',
    asyncHandler(async (req, res) => {
@@ -20,8 +19,6 @@ expRouter.get(
 );
 
 // GET /api/exp/:id - get expense by ID
-// SELECT * FROM `expenses`
-// WHERE id=id;
 expRouter.get(
    '/api/exp/:id',
    asyncHandler(async (req, res) => {
@@ -36,7 +33,6 @@ expRouter.get(
 );
 
 // CREATE /api/exp/ - create ne expense
-// `INSERT INTO expenses(cat_id, comment, date, amount) VALUES (?,?,?,?)`
 expRouter.post(
    '/api/exp',
    asyncHandler(async (req, res) => {
@@ -53,8 +49,6 @@ expRouter.post(
 );
 
 // DELETE /api/exp/:id - delete expense by ID
-// DELETE FROM `expenses`
-// WHERE id=id;
 expRouter.delete(
    '/api/exp/:id',
    asyncHandler(async (req, res) => {
@@ -65,6 +59,31 @@ expRouter.delete(
          throw new Error(`Post by ID === ${expID} not found, check ID.`);
       }
       res.json({ msg: `Expense by ID === ${expID} has been deleted` });
+   })
+);
+
+// Update by ID
+// PUT /api/exp/:id - edit expense by ID
+expRouter.put(
+   '/api/exp/:id',
+   asyncHandler(async (req, res) => {
+      const { cat_id, comment, date, amount } = req.body;
+      const { id } = req.params;
+      const sql = `
+     UPDATE expenses 
+     SET cat_id = ?, comment = ?, date = ?, amount = ?
+     WHERE id = ?`;
+      const [rows] = await pool.execute(sql, [
+         cat_id,
+         comment,
+         date,
+         amount,
+         id,
+      ]);
+      if (rows.affectedRows === 0) {
+         throw new Error(`ERROR updating expense with id ${id}`);
+      }
+      res.json({ msg: `Expense with id ${id} has been updated` });
    })
 );
 

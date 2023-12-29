@@ -21,10 +21,9 @@ export const ExpProvider = ({ children }) => {
    const [balance, setBalance] = useState(0);
    const [positives, setPositives] = useState(0);
    const [negatives, setNegatives] = useState(0);
-   const [updateTrigger, setUpdateTrigger] = useState(0); // triggers dom update
 
    useEffect(() => {
-      // fetch expenses from DB
+      // fetch expenses from DB on page load
       axios
          .get(`${BASE_URL}/exp_all`)
          .then((res) => {
@@ -39,7 +38,7 @@ export const ExpProvider = ({ children }) => {
          .catch((err) => {
             console.warn('ERROR: ', err);
          });
-   }, [updateTrigger]);
+   }, []);
 
    useEffect(() => {
       // calculates Balance
@@ -61,11 +60,12 @@ export const ExpProvider = ({ children }) => {
       }
    }, [expenses, setBalance, setNegatives, setPositives]);
 
+   // handles new expense
    const submitHandler = (e) => {
       e.preventDefault();
 
       // If cat is not "Salary", make amount negative
-      let finalAmount = cat !== 'Salary' ? -Math.abs(amount) : parseInt(amount);
+      let finalAmount = cat !== '4' ? -Math.abs(amount) : parseInt(amount);
 
       const newExp = {
          cat_id: cat,
@@ -110,6 +110,7 @@ export const ExpProvider = ({ children }) => {
       setEditing(true);
    };
 
+   // handles Edit expense
    const handleSubmitEdit = (e) => {
       e.preventDefault();
       const editExp = {
@@ -121,7 +122,6 @@ export const ExpProvider = ({ children }) => {
       axios
          .put(`${BASE_URL}/exp/${id}`, editExp)
          .then((res) => {
-            console.log(res.data);
             if (res.status === 200) {
                // updates existing expense by ID with created editExp Object
                let updatedExpenses = expenses.map((exp) =>

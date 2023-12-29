@@ -1,2 +1,23 @@
 ### main  page
 GET http://localhost:3000/
+
+### get all expenses
+GET http://localhost:3000/api/exp_all
+
+### get post by ID
+GET http://localhost:3000/api/exp/1
+
+### Create post
+POST http://localhost:3000/api/exp
+Content-Type:  application/json
+
+{
+    "title": "Post 22",
+    "author": "Author 22",
+    "date": "2022-07-07",
+    "content": "Text Area of text"
+}
+
+### Delete post
+DELETE  http://localhost:3000/api/exp/18
+

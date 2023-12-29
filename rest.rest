@@ -5,17 +5,17 @@ GET http://localhost:3000/
 GET http://localhost:3000/api/exp_all
 
 ### get post by ID
-GET http://localhost:3000/api/exp/1
+GET http://localhost:3000/api/exp/10
 
-### Create post
+### Create expense
 POST http://localhost:3000/api/exp
 Content-Type:  application/json
 
 {
-    "title": "Post 22",
-    "author": "Author 22",
-    "date": "2022-07-07",
-    "content": "Text Area of text"
+    "cat_id": "2",
+    "comment": "Test 1",
+    "date": "2023-12-29",
+    "amount": -30
 }
 
 ### Delete post

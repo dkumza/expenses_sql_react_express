@@ -78,9 +78,12 @@ export const ExpProvider = ({ children }) => {
          .post(`${BASE_URL}/exp`, newExp)
          .then((res) => {
             if (res.status === 200) {
-               // console.log(res.data.id); // gets from server ID of new expense
-               // trigger useEffect to fetch data from server and update DOM ???
-               setUpdateTrigger(() => updateTrigger + 1);
+               // Get the ID from the server response
+               const idFromServer = res.data.id;
+               // Add the ID to the new expense object
+               newExp.id = idFromServer;
+               // Add the new expense to the state
+               setExpenses((prevExpenses) => [...prevExpenses, newExp]);
                setCat('');
                setAmount('');
                setTitle('');
@@ -141,8 +144,10 @@ export const ExpProvider = ({ children }) => {
       axios
          .delete(`${BASE_URL}/exp/${toEdit}`)
          .then((res) => {
-            // trigger useEffect to fetch data from server and update DOM ???
-            setUpdateTrigger(() => updateTrigger + 1);
+            // Filter out the deleted expense from the state
+            setExpenses((prevExpenses) =>
+               prevExpenses.filter((expense) => expense.id !== toEdit)
+            );
             setCat('');
             setAmount('');
             setTitle('');

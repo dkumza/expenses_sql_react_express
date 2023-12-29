@@ -6,9 +6,9 @@ const getCategoryInfo = (category) => {
       case '1':
          return ['bi-lightning-charge', 'Food'];
       case '2':
-         return ['bi-balloon-heart', 'Health'];
-      case '3':
          return ['bi-house-heart', 'House'];
+      case '3':
+         return ['bi-balloon-heart', 'Health'];
       default:
          return ['bi-cash-stack', 'Salary'];
    }

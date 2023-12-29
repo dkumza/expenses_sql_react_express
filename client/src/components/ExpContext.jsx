@@ -11,7 +11,7 @@ let todayDate =
 
 export const ExpProvider = ({ children }) => {
    const [expenses, setExpenses] = useState(null);
-   const [cat, setCat] = useState('Food');
+   const [cat, setCat] = useState('1');
    const [amount, setAmount] = useState(0);
    const [title, setTitle] = useState('');
    const [date, setDate] = useState(todayDate);
@@ -21,6 +21,7 @@ export const ExpProvider = ({ children }) => {
    const [balance, setBalance] = useState(0);
    const [positives, setPositives] = useState(0);
    const [negatives, setNegatives] = useState(0);
+   const [updateTrigger, setUpdateTrigger] = useState(0); // triggers dom update
 
    useEffect(() => {
       // fetch expenses from DB
@@ -38,7 +39,7 @@ export const ExpProvider = ({ children }) => {
          .catch((err) => {
             console.warn('ERROR: ', err);
          });
-   }, []);
+   }, [updateTrigger]);
 
    useEffect(() => {
       // calculates Balance
@@ -67,17 +68,19 @@ export const ExpProvider = ({ children }) => {
       let finalAmount = cat !== 'Salary' ? -Math.abs(amount) : parseInt(amount);
 
       const newExp = {
-         cat,
+         cat_id: cat,
          amount: finalAmount,
-         title,
+         comment: title,
          date,
       };
       console.log(newExp);
       axios
          .post(`${BASE_URL}/exp`, newExp)
          .then((res) => {
-            if (res.status === 201) {
-               setExpenses(res.data);
+            if (res.status === 200) {
+               console.log(res.data.id);
+               // trigger useEffect to fetch data from server and update DOM
+               setUpdateTrigger(() => updateTrigger + 1);
                setCat('');
                setAmount('');
                setTitle('');

@@ -32,19 +32,29 @@ expRouter.get(
    })
 );
 
-// CREATE /api/exp/ - create ne expense
+/// CREATE /api/exp/ - create new expense
 expRouter.post(
    '/api/exp',
    asyncHandler(async (req, res) => {
       const { cat_id, comment, date, amount } = req.body;
-      const sql = `
+      const insertSql = `
       INSERT INTO expenses (cat_id, comment, date, amount) 
       VALUES (?,?,?,?)`;
-      const [rows] = await pool.execute(sql, [cat_id, comment, date, amount]);
-      if (rows.affectedRows === 0) {
+      const [insertResult] = await pool.execute(insertSql, [
+         cat_id,
+         comment,
+         date,
+         amount,
+      ]);
+      if (insertResult.affectedRows === 0) {
          throw new Error(`ERROR creating new expense`);
       }
-      res.json({ msg: `New Expense has been created` });
+      const idSql = 'SELECT LAST_INSERT_ID() as id';
+      const [idResult] = await pool.execute(idSql);
+      res.json({
+         msg: `New Expense has been created with ID:`,
+         id: idResult[0].id,
+      });
    })
 );
 

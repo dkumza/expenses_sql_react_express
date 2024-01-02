@@ -6,8 +6,9 @@ export const ExpContext = createContext();
 const BASE_URL = 'http://localhost:3000/api';
 
 let today = new Date();
-let todayDate =
-   today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+let todayDate = `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(
+   -2
+)}-${('0' + today.getDate()).slice(-2)}`;
 
 export const ExpProvider = ({ children }) => {
    const [expenses, setExpenses] = useState(null);
@@ -30,7 +31,11 @@ export const ExpProvider = ({ children }) => {
             if (res.data.length === 0) return;
             let formattedExpenses = res.data.map((expense) => {
                let date = new Date(expense.date);
-               let formattedDate = date.toISOString().split('T')[0];
+               let formattedDate = `${date.getFullYear()}-${(
+                  '0' +
+                  (date.getMonth() + 1)
+               ).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+               console.log(formattedDate);
                return { ...expense, date: formattedDate };
             });
             setExpenses(formattedExpenses);
@@ -152,6 +157,7 @@ export const ExpProvider = ({ children }) => {
             setAmount('');
             setTitle('');
             setDate(todayDate);
+            setEditing(false);
          })
          .catch((error) => {
             console.warn('ERROR:', error);

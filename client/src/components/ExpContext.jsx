@@ -12,6 +12,7 @@ let todayDate = `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(
 
 export const ExpProvider = ({ children }) => {
    const [expenses, setExpenses] = useState(null);
+   const [allCats, setAllCats] = useState(null);
    const [cat, setCat] = useState('1');
    const [amount, setAmount] = useState(0);
    const [title, setTitle] = useState('');
@@ -35,7 +36,6 @@ export const ExpProvider = ({ children }) => {
                   '0' +
                   (date.getMonth() + 1)
                ).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
-               console.log(formattedDate);
                return { ...expense, date: formattedDate };
             });
             setExpenses(formattedExpenses);

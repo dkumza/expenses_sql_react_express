@@ -4,6 +4,7 @@ import { createContext, useEffect, useState } from 'react';
 export const ExpContext = createContext();
 
 const BASE_URL = 'http://localhost:3000/api';
+const CATS_URL = `http://localhost:3000/api/cats`;
 
 let today = new Date();
 let todayDate = `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(
@@ -14,7 +15,7 @@ export const ExpProvider = ({ children }) => {
    const [expenses, setExpenses] = useState(null);
    const [allCats, setAllCats] = useState(null);
    const [cat, setCat] = useState('1');
-   const [amount, setAmount] = useState(0);
+   const [amount, setAmount] = useState('');
    const [title, setTitle] = useState('');
    const [date, setDate] = useState(todayDate);
    const [id, setId] = useState('');
@@ -39,6 +40,19 @@ export const ExpProvider = ({ children }) => {
                return { ...expense, date: formattedDate };
             });
             setExpenses(formattedExpenses);
+         })
+         .catch((err) => {
+            console.warn('ERROR: ', err);
+         });
+   }, []);
+
+   useEffect(() => {
+      // fetch expenses categories from db
+      axios
+         .get(CATS_URL)
+         .then((res) => {
+            // console.log(res.data);
+            setAllCats(res.data);
          })
          .catch((err) => {
             console.warn('ERROR: ', err);
@@ -78,7 +92,7 @@ export const ExpProvider = ({ children }) => {
          comment: title,
          date,
       };
-      console.log(newExp);
+
       axios
          .post(`${BASE_URL}/exp`, newExp)
          .then((res) => {
@@ -197,6 +211,8 @@ export const ExpProvider = ({ children }) => {
             positives,
             negatives,
             handleCancel,
+            allCats,
+            setAllCats,
          }}
       >
          {children}

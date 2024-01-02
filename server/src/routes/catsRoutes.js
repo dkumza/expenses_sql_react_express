@@ -13,7 +13,8 @@ const catsRouter = express.Router();
 catsRouter.get(
    '/api/cats',
    asyncHandler(async (req, res) => {
-      const [rows] = await pool.execute('SELECT * FROM exp_cats');
+      const sql = `SELECT * FROM exp_cats`;
+      const [rows] = await pool.execute(sql);
       res.json(rows);
    })
 );

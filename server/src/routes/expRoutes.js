@@ -13,7 +13,12 @@ const expRouter = express.Router();
 expRouter.get(
    '/api/exp_all',
    asyncHandler(async (req, res) => {
-      const [rows] = await pool.execute('SELECT * FROM expenses');
+      const sql = `
+      SELECT expenses.id, expenses.cat_id AS catID, exp_cats.cat_name AS catName, expenses.amount, expenses.comment, expenses.date
+      FROM expenses
+      JOIN exp_cats ON expenses.cat_id=exp_cats.cat_id
+      `;
+      const [rows] = await pool.execute(sql);
       res.json(rows);
    })
 );

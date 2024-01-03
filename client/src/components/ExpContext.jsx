@@ -11,6 +11,7 @@ const todayDate = new Date().toLocaleString('lt-LT', {
 });
 
 export const ExpProvider = ({ children }) => {
+   const [logged, setLogged] = useState(false);
    const [expenses, setExpenses] = useState(null);
    const [allCats, setAllCats] = useState(null);
    const [cat, setCat] = useState('1');
@@ -211,6 +212,8 @@ export const ExpProvider = ({ children }) => {
             handleCancel,
             allCats,
             setAllCats,
+            logged,
+            setLogged,
          }}
       >
          {children}

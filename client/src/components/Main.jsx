@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { ExpContext } from "./ExpContext";
-import { Expense } from "./Expense";
+import { useContext } from 'react';
+import { ExpContext } from './ExpContext';
+import { Expense } from './Expense';
 
 export const Main = () => {
    const { expenses } = useContext(ExpContext);

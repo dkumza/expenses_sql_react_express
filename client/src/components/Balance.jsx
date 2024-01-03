@@ -1,11 +1,11 @@
-import { useContext } from "react";
-import { ExpContext } from "./ExpContext";
+import { useContext } from 'react';
+import { ExpContext } from './ExpContext';
 
 export const Balance = () => {
    const { balance, positives, negatives } = useContext(ExpContext);
 
    return (
-      <div className=" flex flex-col gap-2 lg:rounded w-full mt-4 text-gray-700">
+      <div className=" flex flex-col gap-2 lg:rounded mt-4 text-gray-700 md:w-[560px] ">
          <div className="balance-wrap text-center leading-3 mx-2 border rounded-lg border-gray-100 shadow shadow-gray-300/50 flex flex-col gap-1 p-4">
             <h1 className="balance-big text-2xl">{balance} EUR</h1>
             <p className="small-txt">Account Balance</p>

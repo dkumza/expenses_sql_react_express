@@ -17,8 +17,6 @@ const getCategoryInfo = (category) => {
 export const Expense = ({ exp }) => {
    const { handleEdit } = useContext(ExpContext);
 
-   // console.log(exp);
-
    const iconClass = getCategoryInfo(exp.cat_id);
 
    return (

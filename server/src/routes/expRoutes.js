@@ -14,7 +14,7 @@ expRouter.get(
    '/api/exp_all',
    asyncHandler(async (req, res) => {
       const sql = `
-      SELECT expenses.id, expenses.cat_id AS catID, exp_cats.cat_name AS catName, expenses.amount, expenses.comment, expenses.date
+      SELECT expenses.id, expenses.cat_id AS cat_id, exp_cats.cat_name AS cat_name, expenses.amount, expenses.comment, expenses.date
       FROM expenses
       JOIN exp_cats ON expenses.cat_id=exp_cats.cat_id
       `;

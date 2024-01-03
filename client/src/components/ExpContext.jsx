@@ -6,10 +6,9 @@ export const ExpContext = createContext();
 const BASE_URL = 'http://localhost:3000/api';
 const CATS_URL = `http://localhost:3000/api/cats`;
 
-let today = new Date();
-let todayDate = `${today.getFullYear()}-${('0' + (today.getMonth() + 1)).slice(
-   -2
-)}-${('0' + today.getDate()).slice(-2)}`;
+const todayDate = new Date().toLocaleString('lt-LT', {
+   dateStyle: 'short',
+});
 
 export const ExpProvider = ({ children }) => {
    const [expenses, setExpenses] = useState(null);
@@ -32,11 +31,12 @@ export const ExpProvider = ({ children }) => {
          .then((res) => {
             if (res.data.length === 0) return;
             let formattedExpenses = res.data.map((expense) => {
-               let date = new Date(expense.date);
-               let formattedDate = `${date.getFullYear()}-${(
-                  '0' +
-                  (date.getMonth() + 1)
-               ).slice(-2)}-${('0' + date.getDate()).slice(-2)}`;
+               const formattedDate = new Date(expense.date).toLocaleString(
+                  'lt-LT',
+                  {
+                     dateStyle: 'short',
+                  }
+               );
                return { ...expense, date: formattedDate };
             });
             setExpenses(formattedExpenses);
@@ -51,7 +51,6 @@ export const ExpProvider = ({ children }) => {
       axios
          .get(CATS_URL)
          .then((res) => {
-            // console.log(res.data);
             setAllCats(res.data);
          })
          .catch((err) => {
@@ -92,7 +91,6 @@ export const ExpProvider = ({ children }) => {
          comment: title,
          date,
       };
-
       axios
          .post(`${BASE_URL}/exp`, newExp)
          .then((res) => {

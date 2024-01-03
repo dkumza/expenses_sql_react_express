@@ -5,14 +5,18 @@ import logo from '../assets/login-img.svg';
 
 export const LogInPage = () => {
    const { logged, setLogged } = useContext(ExpContext);
+
    if (logged) return;
+
    return (
       <div className="md:w-[1024] flex items-center justify-center align-middle gap-4 min-h-screen">
          <div className="left w-2/3">
             <img src={logo} alt="" />
          </div>
          <div className="w-1/3  flex flex-col h-full relative justify-center items-center">
-            <h1 className="absolute -top-28 text-4xl font-light">BUDGET APP</h1>
+            <h1 className="absolute -top-28 text-4xl font-light text-gray-700">
+               BUDGET APP
+            </h1>
             <form className="flex gap-4 flex-col w-full h-full">
                <div className="relative h-10 w-full min-w-[100px] ">
                   <input

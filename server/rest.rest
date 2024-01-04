@@ -34,3 +34,12 @@ DELETE  http://localhost:3000/api/exp/10
 
 ### get all expenses categories
 GET http://localhost:3000/api/cats
+
+### REGISTER User
+POST http://localhost:3000/api/auth/reg
+Content-Type: application/json
+
+{
+  "email": "james@secure.com",
+  "password": "123456"
+}

@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const expRouter = require('./routes/expRoutes');
 const catsRouter = require('./routes/catsRoutes');
+const authRouter = require('./routes/authRoutes');
 
 const app = express();
 
@@ -20,9 +21,8 @@ app.get('/', (req, res) => {
 
 // Expenses Routes
 app.use('/', expRouter);
-
-// Cats Routes
 app.use('/', catsRouter);
+app.use('/', authRouter);
 
 app.listen(port, () => {
    console.log(`Server is listening on port ${port}`);

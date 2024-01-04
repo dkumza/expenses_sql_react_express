@@ -13,11 +13,11 @@ authRouter.post(
    '/api/auth/reg',
    asyncHandler(async (req, res) => {
       const { email, password } = req.body;
-      console.log(req.body);
+      const hashPsw = bcrypt.hashSync(password, 10);
 
       const sql = 'INSERT INTO users (email, password) VALUES (?,?)';
 
-      const [rows] = await pool.execute(sql, [email, password]);
+      const [rows] = await pool.execute(sql, [email, hashPsw]);
       res.json(rows);
    })
 );

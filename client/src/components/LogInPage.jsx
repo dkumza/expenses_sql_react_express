@@ -43,7 +43,7 @@ export const LogInPage = () => {
                   </label>
                </div>
                <button className="border px-8 py-2 rounded-md bg-gradient-to-l from-sky-500 to-sky-700  text-white font-semibold  hover:bg-gradient-to-b">
-                  Sign In
+                  Log In
                </button>
             </form>
          </div>

@@ -10,7 +10,7 @@ function App() {
    return (
       <ExpProvider>
          <div className="main-wrap container mx-auto  min-h-screen relative flex flex-col items-center">
-            <LogInPage />
+            {/* <LogInPage /> */}
             <Head />
             <Balance />
             <New />

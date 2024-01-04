@@ -22,4 +22,26 @@ authRouter.post(
    })
 );
 
+// LOG IN Existing user
+authRouter.post(
+   '/api/auth/log',
+   asyncHandler(async (req, res) => {
+      const { email, password: plainPsw } = req.body;
+      const sql = 'SELECT * FROM `users` WHERE `email`= ?';
+      const [usersArray] = await pool.execute(sql, [email]);
+
+      // check if email matches, if no return
+      if (usersArray.length === 0)
+         return res.status(400).json({ msg: 'email or password do not match' });
+
+      // if found - check if password matches
+      const foundUser = usersArray[0];
+      if (!bcrypt.compareSync(plainPsw, foundUser.password))
+         return res.status(400).json({ msg: 'email or password do not match' });
+
+      // if everything matches (email and password from DB)
+      res.json({ msg: 'Login success' });
+   })
+);
+
 module.exports = authRouter;

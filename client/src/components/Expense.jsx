@@ -17,10 +17,12 @@ const getCategoryInfo = (category) => {
 export const Expense = ({ exp }) => {
    const { handleEdit } = useContext(ExpContext);
 
+   // console.log(exp);
+
    const iconClass = getCategoryInfo(exp.cat_id);
 
    return (
-      <div className="w-full" onClick={() => handleEdit(exp.id)}>
+      <div id={exp.id} className="w-full" onClick={() => handleEdit(exp.id)}>
          <li className="flex w-full items-center border border-gray-100 rounded shadow px-1 py-1 hover:bg-gradient-to-r from-white to-gray-50 shadow-gray-300/50 hover:cursor-pointer">
             <div className="flex justify-center items-center px-3 mr-4 border-r">
                <i className={`bi ${iconClass[0]}`}></i>

@@ -83,6 +83,7 @@ export const ExpProvider = ({ children }) => {
    const submitHandler = (e) => {
       e.preventDefault();
 
+      console.log(cat);
       // If cat is not "Salary", make amount negative
       let finalAmount = cat !== '4' ? -Math.abs(amount) : parseInt(amount);
 
@@ -98,11 +99,24 @@ export const ExpProvider = ({ children }) => {
             if (res.status === 200) {
                // Get the ID from the server response
                const idFromServer = res.data.id;
-               // Add the ID to the new expense object
+               console.log(idFromServer);
                newExp.id = idFromServer;
+               const foundCat = allCats.find(
+                  (cats) => cats.cat_id === parseInt(cat)
+               );
+
+               if (foundCat) {
+                  const foundCatName = foundCat.cat_name;
+                  console.log(foundCatName);
+               } else {
+                  console.log('No cat found with the provided id');
+               }
+               // const catName =
+               // Add the ID to the new expense object
+
                // Add the new expense to the state
                setExpenses((prevExpenses) => [...prevExpenses, newExp]);
-               setCat('');
+               setCat('1');
                setAmount('');
                setTitle('');
                setDate(todayDate);
@@ -112,6 +126,8 @@ export const ExpProvider = ({ children }) => {
             console.warn('ERROR: ', err);
          });
    };
+
+   // console.log(allCats);
 
    const handleFormFill = (id) => {
       const found = expenses.find((exp) => exp.id === id); // if user exists fill input fields
@@ -146,7 +162,7 @@ export const ExpProvider = ({ children }) => {
                   exp.id === id ? { id, ...editExp } : exp
                );
                setExpenses(updatedExpenses);
-               setCat('');
+               setCat('1');
                setAmount('');
                setTitle('');
                setDate(todayDate);
@@ -166,7 +182,7 @@ export const ExpProvider = ({ children }) => {
             setExpenses((prevExpenses) =>
                prevExpenses.filter((expense) => expense.id !== toEdit)
             );
-            setCat('');
+            setCat('1');
             setAmount('');
             setTitle('');
             setDate(todayDate);
@@ -180,7 +196,7 @@ export const ExpProvider = ({ children }) => {
    const handleCancel = (e) => {
       e.preventDefault();
       setEditing(false);
-      setCat('');
+      setCat('1');
       setAmount('');
       setTitle('');
       setDate(todayDate);

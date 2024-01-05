@@ -99,20 +99,15 @@ export const ExpProvider = ({ children }) => {
             if (res.status === 200) {
                // Get the ID from the server response
                const idFromServer = res.data.id;
-               console.log(idFromServer);
                newExp.id = idFromServer;
+
+               // found cat name by cat ID
                const foundCat = allCats.find(
                   (cats) => cats.cat_id === parseInt(cat)
                );
-
-               if (foundCat) {
-                  const foundCatName = foundCat.cat_name;
-                  console.log(foundCatName);
-               } else {
-                  console.log('No cat found with the provided id');
-               }
-               // const catName =
-               // Add the ID to the new expense object
+               foundCat
+                  ? (newExp.cat_name = foundCat.cat_name)
+                  : 'no cat name found';
 
                // Add the new expense to the state
                setExpenses((prevExpenses) => [...prevExpenses, newExp]);
@@ -127,9 +122,8 @@ export const ExpProvider = ({ children }) => {
          });
    };
 
-   // console.log(allCats);
-
    const handleFormFill = (id) => {
+      console.log(expenses);
       const found = expenses.find((exp) => exp.id === id); // if user exists fill input fields
       setCat(found.cat_id);
       setAmount(found.amount);

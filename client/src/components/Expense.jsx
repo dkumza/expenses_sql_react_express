@@ -4,20 +4,18 @@ import { ExpContext } from './ExpContext';
 const getCategoryInfo = (category) => {
    switch (category) {
       case '1':
-         return ['bi-lightning-charge', 'Food'];
+         return ['bi-lightning-charge'];
       case '2':
-         return ['bi-house-heart', 'House'];
+         return ['bi-house-heart'];
       case '3':
-         return ['bi-balloon-heart', 'Health'];
+         return ['bi-balloon-heart'];
       default:
-         return ['bi-cash-stack', 'Salary'];
+         return ['bi-cash-stack'];
    }
 };
 
 export const Expense = ({ exp }) => {
    const { handleEdit } = useContext(ExpContext);
-
-   // console.log(exp);
 
    const iconClass = getCategoryInfo(exp.cat_id);
 
@@ -28,7 +26,7 @@ export const Expense = ({ exp }) => {
                <i className={`bi ${iconClass[0]}`}></i>
             </div>
             <div className="category-item md:pr-8 pr-4">
-               <h3 className="text-base">{iconClass[1]}</h3>
+               <h3 className="text-base">{exp.cat_name}</h3>
                <p className="text-xs font-normal text-gray-400">{exp.date}</p>
             </div>
             <div className="text-sm text-gray-400">{exp.comment}</div>

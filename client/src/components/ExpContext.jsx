@@ -101,15 +101,8 @@ export const ExpProvider = ({ children }) => {
                const idFromServer = res.data.id;
                newExp.id = idFromServer;
 
-               // found cat name by cat ID
-               const foundCat = allCats.find(
-                  (cats) => cats.cat_id === parseInt(cat)
-               );
-               foundCat
-                  ? (newExp.cat_name = foundCat.cat_name)
-                  : 'no cat name found';
-
-               // Add the new expense to the state
+               findCatNameById(allCats, cat, newExp);
+               // Add the new expense to the state and update DOM
                setExpenses((prevExpenses) => [...prevExpenses, newExp]);
                setCat('1');
                setAmount('');
@@ -147,12 +140,15 @@ export const ExpProvider = ({ children }) => {
          date,
          amount: parseInt(amount),
       };
+
       axios
          .put(`${BASE_URL}/exp/${id}`, editExp)
          .then((res) => {
             if (res.status === 200) {
+               findCatNameById(allCats, cat, editExp); // add cat_name to expenses state
+
                // updates existing expense by ID with created editExp Object
-               let updatedExpenses = expenses.map((exp) =>
+               const updatedExpenses = expenses.map((exp) =>
                   exp.id === id ? { id, ...editExp } : exp
                );
                setExpenses(updatedExpenses);
@@ -195,6 +191,11 @@ export const ExpProvider = ({ children }) => {
       setTitle('');
       setDate(todayDate);
    };
+
+   function findCatNameById(allCats, catId, expense) {
+      const foundCat = allCats.find((cats) => cats.cat_id === parseInt(catId));
+      return foundCat ? (expense.cat_name = foundCat.cat_name) : null;
+   }
 
    return (
       <ExpContext.Provider

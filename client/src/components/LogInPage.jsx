@@ -1,13 +1,6 @@
-import { useContext } from 'react';
-import { ExpContext } from './ExpContext';
-
 import logo from '../assets/login-img.svg';
 
-export const LogInPage = () => {
-   const { logged, setLogged } = useContext(ExpContext);
-
-   if (logged) return;
-
+export const LogInPage = ({ logged, setLogged }) => {
    return (
       <div className="md:w-[1024] flex items-center justify-center align-middle gap-4 min-h-screen">
          <div className="left w-2/3">
@@ -45,6 +38,9 @@ export const LogInPage = () => {
                <button className="border px-8 py-2 rounded-md bg-gradient-to-l from-sky-500 to-sky-700  text-white font-semibold  hover:bg-gradient-to-b">
                   Log In
                </button>
+               <div className="text-sky-700 text-right hover:underline cursor-pointer">
+                  Create account
+               </div>
             </form>
          </div>
       </div>

@@ -83,7 +83,6 @@ export const ExpProvider = ({ children }) => {
    const submitHandler = (e) => {
       e.preventDefault();
 
-      console.log(cat);
       // If cat is not "Salary", make amount negative
       let finalAmount = cat !== '4' ? -Math.abs(amount) : parseInt(amount);
 
@@ -100,7 +99,6 @@ export const ExpProvider = ({ children }) => {
                // Get the ID from the server response
                const idFromServer = res.data.id;
                newExp.id = idFromServer;
-
                findCatNameById(allCats, cat, newExp);
                // Add the new expense to the state and update DOM
                setExpenses((prevExpenses) => [...prevExpenses, newExp]);
@@ -116,8 +114,7 @@ export const ExpProvider = ({ children }) => {
    };
 
    const handleFormFill = (id) => {
-      console.log(expenses);
-      const found = expenses.find((exp) => exp.id === id); // if user exists fill input fields
+      const found = expenses.find((exp) => exp.id === id); // if expense exists fill input fields
       setCat(found.cat_id);
       setAmount(found.amount);
       setTitle(found.comment);

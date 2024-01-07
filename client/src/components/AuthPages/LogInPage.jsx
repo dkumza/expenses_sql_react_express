@@ -18,6 +18,7 @@ export const LogInPage = ({ logIn, setLogIn }) => {
          email,
          password: psw,
       };
+
       axios
          .post(`${BASE_URL}/auth/log`, user)
          .then((res) => {
@@ -29,6 +30,7 @@ export const LogInPage = ({ logIn, setLogIn }) => {
          })
          .catch((err) => {
             const { status, data } = err.response;
+            console.warn(err);
             alert(data.msg);
             // console.warn('ERROR: ', err);
          });

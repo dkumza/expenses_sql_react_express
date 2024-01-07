@@ -11,9 +11,11 @@ const todayDate = new Date().toLocaleString('lt-LT', {
 });
 
 export const ExpProvider = ({ children }) => {
+   // check for boolean value in localStorage, if true - don't need to log in, else - log in page are shown
    const [logged, setLogged] = useState(
-      localStorage.getItem('logged') || false
+      JSON.parse(localStorage.getItem('logged')) || false
    );
+   // const [logIn, setLogIn] = useState(true);
    const [expenses, setExpenses] = useState(null);
    const [allCats, setAllCats] = useState(null);
    const [cat, setCat] = useState('1');

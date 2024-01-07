@@ -33,12 +33,12 @@ authRouter.post(
 
       // check if email matches, if no return
       if (usersArray.length === 0)
-         return res.status(400).json({ msg: 'email or password do not match' });
+         return res.status(400).json({ msg: 'Email or password do not match' });
 
       // if found - check if password matches
       const foundUser = usersArray[0];
       if (!bcrypt.compareSync(plainPsw, foundUser.password))
-         return res.status(400).json({ msg: 'email or password do not match' });
+         return res.status(400).json({ msg: 'Email or password do not match' });
 
       // if everything matches (email and password from DB)
       res.json({ msg: 'Login success' });

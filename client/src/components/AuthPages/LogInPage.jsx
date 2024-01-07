@@ -28,7 +28,9 @@ export const LogInPage = ({ logIn, setLogIn }) => {
             }
          })
          .catch((err) => {
-            console.warn('ERROR: ', err);
+            const { status, data } = err.response;
+            alert(data.msg);
+            // console.warn('ERROR: ', err);
          });
    };
    return (

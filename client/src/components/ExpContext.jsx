@@ -11,7 +11,9 @@ const todayDate = new Date().toLocaleString('lt-LT', {
 });
 
 export const ExpProvider = ({ children }) => {
-   const [logged, setLogged] = useState(false);
+   const [logged, setLogged] = useState(
+      localStorage.getItem('logged') || false
+   );
    const [expenses, setExpenses] = useState(null);
    const [allCats, setAllCats] = useState(null);
    const [cat, setCat] = useState('1');
@@ -24,6 +26,11 @@ export const ExpProvider = ({ children }) => {
    const [balance, setBalance] = useState(0);
    const [positives, setPositives] = useState(0);
    const [negatives, setNegatives] = useState(0);
+
+   // save log in value to LS
+   useEffect(() => {
+      localStorage.setItem('logged', logged);
+   }, [logged]);
 
    useEffect(() => {
       // fetch expenses from DB on page load

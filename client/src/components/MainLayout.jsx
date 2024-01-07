@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import { Head } from './Head';
-import { LogInPage } from './LogInPage';
 import { Main } from './Main';
 import { New } from './New';
 import { ExpContext } from './ExpContext';
+
+import MainPage from './AuthPages/MainPage';
 
 export const MainLayout = () => {
    const { logged, setLogged } = useContext(ExpContext);
@@ -16,7 +17,7 @@ export const MainLayout = () => {
                <Main />
             </>
          ) : (
-            <LogInPage logged={logged} setLogged={setLogged} />
+            <MainPage />
          )}
       </div>
    );

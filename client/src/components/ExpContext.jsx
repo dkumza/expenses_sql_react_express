@@ -162,6 +162,7 @@ export const ExpProvider = ({ children }) => {
                setAmount('');
                setTitle('');
                setDate(todayDate);
+               setEditing(false);
             }
          })
          .catch((err) => {

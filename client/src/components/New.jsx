@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ExpContext } from './ExpContext';
+import { Button } from './Inputs/Button';
 
 export const New = () => {
    const {
@@ -89,30 +90,28 @@ export const New = () => {
                </div>
             </div>
             {!editing && (
-               <button className="border px-8 py-2 rounded-md bg-gradient-to-r from-sky-400 to-sky-500  text-white font-semibold  hover:bg-gradient-to-b">
-                  ADD
-               </button>
+               <Button
+                  style={'w-full from-sky-500 to-sky-700 text-white'}
+                  label={'Add'}
+               />
             )}
             {editing && (
                <div className="wrap flex gap-2 font-semibold">
-                  <button
-                     onClick={handleSubmitEdit}
-                     className="border w-24 py-2 rounded-md bg-gradient-to-r from-lime-400 to-lime-500 text-white font-semibold  hover:bg-gradient-to-b"
-                  >
-                     Confirm
-                  </button>
-                  <button
-                     onClick={handleDelete}
-                     className="border w-24 py-2 rounded-md bg-gradient-to-r from-rose-400 to-rose-500 text-white hover:bg-gradient-to-b"
-                  >
-                     Delete
-                  </button>
-                  <button
-                     onClick={handleCancel}
-                     className="border w-24 py-2 rounded-md bg-gradient-to-r from-yellow-400 to-yellow-500 text-white hover:bg-gradient-to-b"
-                  >
-                     Cancel
-                  </button>
+                  <Button
+                     onButtonClick={handleSubmitEdit}
+                     style={'w-full from-lime-400 to-lime-500 text-white'}
+                     label={'Confirm'}
+                  />
+                  <Button
+                     onButtonClick={handleDelete}
+                     style={'w-full from-rose-400 to-rose-500 text-white'}
+                     label={'Delete'}
+                  />
+                  <Button
+                     onButtonClick={handleCancel}
+                     style={'w-full from-yellow-400 to-yellow-500 text-white'}
+                     label={'Cancel'}
+                  />
                </div>
             )}
          </form>

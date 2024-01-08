@@ -31,6 +31,7 @@ export const ExpProvider = ({ children }) => {
 
    // save log in value to LS
    useEffect(() => {
+      console.log(first);
       localStorage.setItem('logged', logged);
    }, [logged]);
 

@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { createContext, useEffect, useState } from 'react';
+import { createContext, useEffect, useReducer, useState } from 'react';
 
 export const ExpContext = createContext();
+import { expensesReducer } from '../reducers/expensesReducer';
 
 const BASE_URL = 'http://localhost:3000/api';
 const CATS_URL = `http://localhost:3000/api/cats`;
@@ -15,7 +16,7 @@ export const ExpProvider = ({ children }) => {
    const [logged, setLogged] = useState(
       JSON.parse(localStorage.getItem('logged')) || false
    );
-   // const [logIn, setLogIn] = useState(true);
+   const [exp, dispatchExp] = useReducer(expensesReducer, null);
    const [expenses, setExpenses] = useState(null);
    const [allCats, setAllCats] = useState(null);
    const [cat, setCat] = useState('1');
@@ -49,12 +50,15 @@ export const ExpProvider = ({ children }) => {
                );
                return { ...expense, date: formattedDate };
             });
-            setExpenses(formattedExpenses);
+            dispatchExp({ type: 'GET_EXPENSES', payload: formattedExpenses });
+            // setExpenses(formattedExpenses);
          })
          .catch((err) => {
             console.warn('ERROR: ', err);
          });
    }, []);
+
+   console.log(exp);
 
    useEffect(() => {
       // fetch expenses categories from db
@@ -209,6 +213,7 @@ export const ExpProvider = ({ children }) => {
          value={{
             submitHandler,
             handleEdit,
+            exp,
             expenses,
             setExpenses,
             cat,

@@ -3,8 +3,8 @@ import { createContext, useEffect, useState } from 'react';
 
 export const ExpContext = createContext();
 
-const BASE_URL = 'http://localhost:3000/api';
-const CATS_URL = `http://localhost:3000/api/cats`;
+const BASE_URL = 'http://localhost:3003/api';
+const CATS_URL = `http://localhost:3003/api/cats`;
 
 const todayDate = new Date().toLocaleString('lt-LT', {
    dateStyle: 'short',
@@ -31,7 +31,6 @@ export const ExpProvider = ({ children }) => {
 
    // save log in value to LS
    useEffect(() => {
-      console.log(first);
       localStorage.setItem('logged', logged);
    }, [logged]);
 

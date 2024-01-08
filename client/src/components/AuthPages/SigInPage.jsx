@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Input } from '../Inputs/Input';
 import { Button } from '../Inputs/Button';
 
-const BASE_URL = 'http://localhost:3000/api';
+const BASE_URL = 'http://localhost:3003/api';
 
 export const SignInPage = ({ logIn, setLogIn }) => {
    const [email, setEmail] = useState('');
